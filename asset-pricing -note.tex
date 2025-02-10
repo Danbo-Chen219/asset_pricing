@@ -1,0 +1,376 @@
+\documentclass{article}
+\usepackage{amsmath, amsthm, amssymb, calrsfs, wasysym, verbatim, bbm, color, graphics, geometry, multirow, booktabs}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{setspace}
+\usepackage{tikz}
+
+\usepackage{pgfplots}
+\renewcommand{\baselinestretch}{1.0}
+\geometry{tmargin=.75in, bmargin=.75in, lmargin=.75in, rmargin = .75in}  
+\pgfplotsset{compat=1.18}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Cdot}{\boldsymbol{\cdot}}
+
+
+\title{Asset Pricing Note}
+\author{Danbo CHEN}
+\date{\today}
+
+
+\begin{document}
+
+\maketitle
+\vspace{.25in}
+\tableofcontents
+
+\section{ICAMP Model}
+\subsection{Capital Market Structure}
+\begin{itemize}
+    \item \textbf{Assumption 1} All asset have limited liability
+    \item \textbf{Assumption 2} There are no transaction costs, taxes, or problems with indivisibilities of assets.
+    \textbf{Assumption 3}: There are a sufficient number of investors with comparable wealth levels so that each investor believes that he can buy and sell as much of an asset as he wants at the market price.
+
+    \textbf{Assumption 4}: The capital market is always in equilibrium (i.e., there is no trading at non-equilibrium prices).
+    
+    \textbf{Assumption 5}: There exists an exchange market for borrowing and lending at the same rate of interest.
+    
+    \textbf{Assumption 6}: Short-sales of all assets, with full use of the proceeds, is allowed.
+    
+    \textbf{Assumption 7}: Trading in assets takes place continually in time.
+    
+    \textbf{Assumption 8}: The vector set of stochastic processes describing the opportunity set and its changes, is a time-homogeneous\textsuperscript{13} Markov process.
+
+    \textbf{Assumption 9}: Only local changes in the state variables of the process are allowed.
+
+    \textbf{Assumption 10}: For each asset in the opportunity set at each point in time \( t \), the expected rate of return per unit time is defined by \[
+    \alpha \equiv E_t \left[ \frac{P(t + h) - P(t)}{P(t)h} \right],
+    \]
+
+where \( P(t) \) represents the price of the asset at time \( t \).
+
+\end{itemize}
+
+We consider a model where $K$ consumer-investors optimize their lifetime consumption and investment decisions under uncertainty.
+
+\subsection*{Optimization Problem}
+The $k$-th consumer maximizes expected lifetime utility:
+\[
+\max E_0 \left[ \int_0^{T^k} U^k[c^k(s), s] ds + B^k[W^k(T^k), T^k] \right],
+\]
+where:
+\begin{itemize}
+    \item $E_0$ is the conditional expectation operator.
+    \item $U^k[c^k(s), s]$ is a strictly concave von Neumann-Morgenstern utility function for consumption.
+    \item $B^k[W^k(T^k), T^k]$ represents the strictly concave bequest utility function.
+    \item $W^k(0) = W^k$ denotes the initial wealth.
+    \item $T^k$ is a stochastic variable representing the time of death.
+\end{itemize}
+
+\subsection*{Wealth Accumulation Equation}
+The evolution of wealth $W$ for the $k$-th investor is given by:
+\[
+dW = \sum_{i=1}^{n+1} w_i W \frac{dP_i}{P_i} + (y - c) dt,
+\]
+where:
+\begin{itemize}
+    \item $w_i$ is the portfolio weight allocated to asset $i$.
+    \item $P_i$ is the price of asset $i$, with return rate $dP_i / P_i$.
+    \item $y$ is non-investment income, and $c$ is consumption.
+    \item The first term represents stochastic returns from investments.
+    \item The second term represents net savings from labor income.
+\end{itemize}
+
+\subsection*{Economic Insights}
+\begin{itemize}
+    \item Consumers make \textbf{intertemporal decisions}, balancing current vs. future consumption.
+    \item \textbf{Mortality risk} ($T^k$ is random) influences savings and bequest motives.
+    \item \textbf{Portfolio allocation} affects wealth accumulation.
+    \item The model links to \textbf{ICAPM}, where future investment opportunities affect current decisions.
+\end{itemize}
+
+\subsection*{Equation (10): Stochastic Wealth Evolution}
+The wealth accumulation process is given by:
+\[
+dW = \left[ \sum_{i=1}^{n} w_i (\alpha_i - r) + r \right] W dt + \sum_{i=1}^{n} w_i W \sigma_i dz_i + (y - c) dt,
+\]
+where:
+\begin{itemize}
+    \item \( W \): Total wealth.
+    \item \( w_i \): Proportion of wealth invested in asset \( i \).
+    \item \( \alpha_i \): Expected return of asset \( i \).
+    \item \( r \): Risk-free interest rate.
+    \item \( \sigma_i \): Volatility of asset \( i \).
+    \item \( dz_i \): Stochastic Brownian motion component.
+    \item \( y \): Income (e.g., wages).
+    \item \( c \): Consumption.
+\end{itemize}
+
+This equation has three main components:
+\begin{itemize}
+    \item \textbf{Drift Term (Deterministic Growth)}:
+    \[
+    \left[ \sum_{i=1}^{n} w_i (\alpha_i - r) + r \right] W dt,
+    \]
+    representing wealth growth from investment returns.
+    
+    \item \textbf{Stochastic Term (Risk Exposure)}:
+    \[
+    \sum_{i=1}^{n} w_i W \sigma_i dz_i,
+    \]
+    modeling random fluctuations in wealth due to market volatility.
+    
+    \item \textbf{Income-Consumption Term}:
+    \[
+    (y - c) dt,
+    \]
+    representing net savings from wage income.
+\end{itemize}
+
+The choice of \( w_i \) is unconstrained because \( w_{n+1} \) (the weight of the risk-free asset) adjusts to satisfy the budget constraint \( \sum_{i=1}^{n+1} w_i = 1 \).
+
+\subsection*{Equation (11): Budget Constraint}
+From the budget constraint:
+\[
+(y - c) dt = \sum_{i=1}^{n+1} dN_i (P_i + dP_i),
+\]
+where:
+\begin{itemize}
+    \item \( dN_i \): Change in the number of shares of asset \( i \).
+    \item \( P_i + dP_i \): Price of asset \( i \), including any price change.
+\end{itemize}
+
+This equation means that the net value of new shares purchased must equal the value of savings from wage income, ensuring budget feasibility.
+
+\subsection*{Economic Implications}
+\begin{itemize}
+    \item \textbf{Portfolio Allocation and Wealth Growth}: Wealth growth depends on portfolio weights \( w_i \) and the excess returns \( \alpha_i - r \).
+    \item \textbf{Risk-Return Tradeoff}: The stochastic term introduces uncertainty, reflecting the trade-off between higher expected returns and risk exposure.
+    \item \textbf{Savings Constraint}: The investor can increase asset holdings only if savings are positive (\( y > c \)); otherwise, assets may be sold to fund consumption.
+\end{itemize}
+
+This framework is central to stochastic portfolio choice models and dynamic consumption-investment problems.
+
+The model assumes that investors derive all their income from capital gains (\( y \equiv 0 \)). The financial system is described by a state-variable vector \( X \), whose elements represent asset prices (\( P \)), expected returns (\( \alpha \)), and volatility (\( \sigma \)). The dynamics of \( X \) follow an Itô process:
+
+\[
+dX = F(X) dt + G(X) dQ,
+\]
+
+where:
+\begin{itemize}
+    \item \( F(X) = [f_1, f_2, \dots, f_m] \) is the drift vector (deterministic trends).
+    \item \( G(X) \) is a diagonal matrix with elements \( [g_1, g_2, \dots, g_m] \) representing volatility.
+    \item \( dQ = [dq_1, dq_2, \dots, dq_m] \) is a vector Wiener process introducing randomness.
+    \item \( \eta_{ij} \) and \( \nu_{ij} \) represent the correlation coefficients between disturbances in different variables.
+\end{itemize}
+
+\subsection*{2. Investor’s Optimization Problem}
+The necessary conditions for an investor maximizing utility over time are:
+
+\begin{align*}
+0 = \max_{\{c, w\}} \Bigg[ U(c,t) + J_t + J_W \Bigg( \sum_{i=1}^{n} w_i (\alpha_i - r) + r \Bigg) W - c \\
++ \sum_{i=1}^{m} J_i f_i + \frac{1}{2} J_{WW} \sum_{i=1}^{n} \sum_{j=1}^{n} w_i w_j \sigma_i \sigma_j \nu_{ij} \\
++ \sum_{i=1}^{m} \sum_{j=1}^{n} J_{iW} w_j W g_i \sigma_j \eta_{ij} + \frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} J_{ij} g_i g_j \nu_{ij} \Bigg],
+\end{align*}
+
+where:
+\begin{itemize}
+    \item \( U(c,t) \) is the instantaneous utility function for consumption.
+    \item \( J_t, J_W, J_{WW}, J_{iW}, J_{ij} \) are derivatives of the value function \( J \), which represents the investor’s total expected utility.
+    \item \( \sum w_i (\alpha_i - r) + r \) represents expected returns on wealth.
+    \item The second-order terms capture portfolio volatility and correlation effects.
+\end{itemize}
+
+\subsection*{3. Economic Interpretation}
+\begin{itemize}
+    \item \textbf{Intertemporal Tradeoff}: The investor optimally balances current consumption and future investment.
+    \item \textbf{Market Uncertainty}: Wiener processes introduce stochastic disturbances, affecting asset prices and expected returns.
+    \item \textbf{Dynamic Optimization}: The value function \( J(W, X, t) \) satisfies a Hamilton-Jacobi-Bellman (HJB) equation, solving which determines optimal consumption and portfolio allocation.
+    \item \textbf{Correlation Effects}: The model accounts for interactions between asset returns and macroeconomic shocks.
+\end{itemize}
+
+\subsection*{4. Conclusion}
+This model extends standard CAPM and ICAPM by incorporating:
+\begin{itemize}
+    \item State-dependent risk factors.
+    \item Stochastic differential equations for wealth evolution.
+    \item A dynamic programming approach to investment decisions.
+\end{itemize}
+
+
+\subsection*{1. First-Order Conditions}
+From the Hamilton-Jacobi-Bellman (HJB) equation, the necessary first-order conditions for optimal consumption and portfolio choice are:
+
+\subsubsection*{Optimal Consumption Condition}
+\begin{equation}
+0 = U_c(c, t) - J_W(W, t, X).
+\end{equation}
+This equates:
+\begin{itemize}
+    \item \( U_c(c, t) \) - the marginal utility of consumption.
+    \item \( J_W(W, t, X) \) - the marginal utility of wealth, representing the value of saving for future consumption.
+\end{itemize}
+This follows from the \textbf{envelope theorem}, ensuring that consumption is chosen optimally over time.
+
+\subsubsection*{Optimal Portfolio Choice Condition}
+\begin{equation}
+0 = J_W (\alpha_i - r) + J_{WW} \sum_{j=1}^{n} w_j W \sigma_{ij} + \sum_{j=1}^{m} J_{jW} g_i \sigma_j \eta_{ji}, \quad (i = 1, 2, \dots, n).
+\end{equation}
+where:
+\begin{itemize}
+    \item \( \alpha_i - r \) is the excess return of asset \( i \).
+    \item \( \sigma_{ij} \) is the instantaneous covariance between returns on assets \( i \) and \( j \).
+    \item \( \eta_{ji} \) represents the correlation between state variable shocks and asset returns.
+\end{itemize}
+The investor adjusts portfolio weights \( w_i \) to balance \textbf{expected marginal return} and \textbf{marginal risk-adjusted return}.
+
+\subsection*{2. Solving for Portfolio Weights}
+Since Equation (2) is linear in \( w_i \), we solve explicitly using matrix inversion:
+
+\begin{equation}
+w_i W = A \sum_{j=1}^{n} v_{ij} (\alpha_j - r) + \sum_{j=1}^{m} \sum_{k=1}^{n} H_k \sigma_j g_k \eta_{jk} v_{ij}, \quad (i = 1, 2, \dots, n).
+\end{equation}
+where:
+\begin{itemize}
+    \item \( v_{ij} \) are elements of the inverse variance-covariance matrix \( \Omega = [\sigma_{ij}] \).
+    \item \( A \equiv -J_W / J_{WW} \), representing \textbf{risk aversion}.
+    \item \( H_k \equiv -J_{kW} / J_{WW} \), representing \textbf{the effect of state variables on portfolio demand}.
+\end{itemize}
+
+\subsection*{3. Interpretation of the Demand Function}
+From the implicit function theorem:
+
+\begin{equation}
+A = - U_c \left/ \left( U_{cc} \frac{\partial c}{\partial W} \right) \right. > 0,
+\end{equation}
+
+\begin{equation}
+H_k = - \frac{\partial c}{\partial x_k} \Big/ \frac{\partial c}{\partial W} \equiv 0.
+\end{equation}
+
+\textbf{Key insights:}
+\begin{itemize}
+    \item The first term in Equation (3), \( A \sum v_{ij} (\alpha_j - r) \), is the standard \textbf{mean-variance demand for risky assets}.
+    \item The second term \( \sum H_k \sigma_j g_k \eta_{jk} v_{ij} \) represents \textbf{hedging demand against unfavorable market shifts}.
+    \item If \( \frac{\partial c}{\partial x_k} < 0 \), an unfavorable shift in \( x_k \) reduces future consumption, leading investors to hedge by adjusting \( w_i \).
+\end{itemize}
+
+\subsection*{4. Economic Implications}
+\begin{itemize}
+    \item \textbf{Risk Aversion and Portfolio Demand:} Higher risk aversion (\( A \)) reduces speculative investment but increases hedging motives.
+    \item \textbf{Hedging Against Market Shocks:} If shocks \( \eta_{ij} \) are positively correlated with asset returns, investors adjust holdings to mitigate risk.
+    \item \textbf{Intertemporal Asset Pricing:} Portfolio weights depend on **future expected returns, risk aversion, and changes in investment opportunities**.
+\end{itemize}
+
+\subsection*{5. Conclusion}
+This framework extends classical **mean-variance portfolio theory** by incorporating:
+\begin{itemize}
+    \item **Dynamic optimization** of consumption and investment.
+    \item **State-dependent risk factors** influencing portfolio allocation.
+    \item **A stochastic differential equation (SDE) approach** to wealth evolution.
+\end{itemize}
+The model explains **how investors dynamically adjust their portfolios to hedge against market risks and shifts in economic conditions**.
+
+\subsection*{1. Constant Investment Opportunity Set}
+The model assumes that the investment opportunity set remains constant over time, meaning:
+\begin{itemize}
+    \item Expected returns (\(\alpha\)), 
+    \item The risk-free rate (\(r\)), and
+    \item The variance-covariance matrix (\(\Omega\))  
+\end{itemize}
+are all time-invariant. Under these conditions, asset prices follow a \textbf{log-normal distribution}, and portfolio allocation remains optimal without rebalancing.
+
+\subsubsection*{Portfolio Demand in a Constant Setting}
+\begin{equation}
+w_i^k W^k = A^k \sum_{j=1}^{n} v_{ij} (\alpha_j - r), \quad (i = 1, 2, \dots, n).
+\end{equation}
+where:
+\begin{itemize}
+    \item \( A^k \) is a risk-aversion-related coefficient.
+    \item \( v_{ij} \) are elements of the inverse variance-covariance matrix \( \Omega \).
+    \item \( \alpha_j - r \) is the excess return of asset \( j \).
+\end{itemize}
+
+\textbf{Interpretation:}
+\begin{itemize}
+    \item This is identical to the \textbf{mean-variance portfolio demand} of a one-period investor.
+    \item If all investors share \textbf{homogeneous expectations}, relative demands for risky assets are identical across investors.
+\end{itemize}
+
+\subsection*{2. Theorem 1: Efficient Portfolio Choice and Market Equilibrium}
+\textbf{Theorem 1} states that if risky asset returns follow a log-normal distribution, then:
+\begin{enumerate}
+    \item \textbf{Existence of Mutual Funds:} 
+    \begin{itemize}
+        \item There exists a unique pair of efficient portfolios:
+        \begin{enumerate}
+            \item One containing only the \textbf{riskless asset}.
+            \item One containing only \textbf{risky assets}.
+        \end{enumerate}
+        \item Investors hold combinations of these two portfolios, independent of their preferences.
+    \end{itemize}
+    
+    \item \textbf{Log-Normal Return Distribution:}  
+    \begin{itemize}
+        \item The return distribution of the risky portfolio is also log-normal.
+    \end{itemize}
+    
+    \item \textbf{Proportion of Risky Fund Allocation:}  
+    \begin{equation}
+    \frac{\sum_{j=1}^{n} v_{jk} (\alpha_j - r)}{\sum_{j=1}^{n} \sum_{i=1}^{n} v_{ij} (\alpha_i - r)}.
+    \end{equation}
+    \begin{itemize}
+        \item Portfolio weights depend on \( \Omega \) and excess returns \( (\alpha - r) \), not investor preferences.
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Economic Meaning:}
+\begin{itemize}
+    \item \textbf{Markowitz-Tobin Separation Theorem:} 
+    All investors hold the same risky portfolio and combine it with the risk-free asset.
+    \item \textbf{Optimality of the Risky Fund:} 
+    The risky fund is the optimal combination of risky assets.
+\end{itemize}
+
+\subsection*{3. Market Equilibrium and CAPM Relationship}
+Using the market portfolio as the efficient risky portfolio, equilibrium returns satisfy:
+
+\begin{equation}
+\alpha_i - r = \beta_i (\alpha_M - r), \quad (i = 1, 2, \dots, n).
+\end{equation}
+where:
+\begin{itemize}
+    \item \( \beta_i \equiv v_{iM} / \sigma_M^2 \) is the \textbf{systematic risk} (beta) of asset \( i \).
+    \item \( v_{iM} \) is the covariance of asset \( i \) with the market portfolio.
+    \item \( \sigma_M^2 \) is the variance of the market portfolio.
+    \item \( \alpha_M \) is the expected return on the market portfolio.
+\end{itemize}
+
+\textbf{Interpretation:}
+\begin{itemize}
+    \item This is the \textbf{continuous-time equivalent of the Security Market Line (SML)} from CAPM.
+    \item Expected excess returns are proportional to systematic risk \( \beta \).
+\end{itemize}
+
+\subsection*{4. Conclusion}
+\begin{itemize}
+    \item \textbf{Constant investment opportunity sets simplify portfolio allocation}, eliminating rebalancing needs.
+    \item Investors behave as if they are \textbf{single-period maximizers}.
+    \item The \textbf{Mutual Fund Theorem} implies that all investors hold combinations of:
+    \begin{itemize}
+        \item The \textbf{risk-free asset}.
+        \item A \textbf{single efficient risky portfolio}.
+    \end{itemize}
+    \item The \textbf{CAPM relationship emerges naturally}, showing that expected returns depend only on systematic risk.
+\end{itemize}
+
+\end{document}
